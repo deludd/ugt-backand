@@ -21,6 +21,9 @@ export class ProductMedia extends BaseEntity {
     @Column({ type: "enum", enum: MediaType, default: MediaType.MAIN })
     type: MediaType;
 
+    @Column({ type: "int" })
+    price: number;
+
     @Column({ type: "varchar" })
     file_key: string;
 

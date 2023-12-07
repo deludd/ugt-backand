@@ -28,30 +28,24 @@ export const GET = async (
     })
 }
 
-export const POST = async (
-    req: MedusaRequest,
-    res: MedusaResponse
-) => {
-    // validation omitted for simplicity
-    const {
-        variant_id,
-        file_key,
-        type = "main",
-        name,
-    } = req.body
+export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
+    const { name, file_key, mime_type, variant_id, price, type } = req.body;
 
-    const productMediaService = req.scope.resolve<
-        ProductMediaService
-    >("productMediaService")
-    const productMedia = await productMediaService.create({
-        variant_id,
-        file_key,
-        type,
-        name,
-        mime_type: ""
-    })
+    const productMediaService = req.scope.resolve<ProductMediaService>("productMediaService");
 
-    res.json({
-        product_media: productMedia,
-    })
-}
+    // Создание нового ProductMedia
+    try {
+        const productMedia = await productMediaService.create({
+            name,
+            file_key,
+            mime_type,
+            variant_id,
+            price,
+            type
+        });
+
+        res.json({ product_media: productMedia });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};

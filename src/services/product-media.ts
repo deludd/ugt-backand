@@ -73,6 +73,8 @@ class ProductMediaService extends TransactionBaseService {
         return [productMedias, count]
     }
 
+
+
     async list(
         selector?: Selector<ProductMedia>,
         config: FindConfig<ProductMedia> = {
@@ -130,35 +132,33 @@ class ProductMediaService extends TransactionBaseService {
     async create(
         data: Pick<
             ProductMedia,
-            "name" | "file_key" | "variant_id" | "type" | "mime_type"
+            "name" | "file_key" | "variant_id" | "type" | "mime_type" | "price"
         >
     ): Promise<ProductMedia> {
         return this.atomicPhase_(async (manager) => {
-            const productMediaRepo = manager.getRepository(
-                ProductMedia
-            )
-            const productMedia = productMediaRepo.create(data)
-            const result = await productMediaRepo.save(productMedia)
+            const productMediaRepo = manager.getRepository(ProductMedia);
+            const productMedia = productMediaRepo.create(data);
+            const result = await productMediaRepo.save(productMedia);
 
-            return result
-        })
+            return result;
+        });
     }
+
 
     async update(
         id: string,
-        data: Omit<Partial<ProductMedia>, "id">
+        data: Omit<Partial<ProductMedia>, "id"> & { price?: number }
     ): Promise<ProductMedia> {
         return await this.atomicPhase_(async (manager) => {
-            const productMediaRepo = manager.getRepository(
-                ProductMedia
-            )
-            const productMedia = await this.retrieve(id)
+            const productMediaRepo = manager.getRepository(ProductMedia);
+            const productMedia = await this.retrieve(id);
 
-            Object.assign(productMedia, data)
+            Object.assign(productMedia, data);
 
-            return await productMediaRepo.save(productMedia)
-        })
+            return await productMediaRepo.save(productMedia);
+        });
     }
+
 
     async delete(id: string): Promise<void> {
         return await this.atomicPhase_(async (manager) => {
