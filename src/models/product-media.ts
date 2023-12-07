@@ -33,7 +33,7 @@ export class ProductMedia extends BaseEntity {
     @Column({ type: "varchar" })
     variant_id: string;
 
-    @ManyToOne(() => ProductVariant, variant => variant.medias)
+    @ManyToOne(() => ProductVariant)
     @JoinColumn({ name: "variant_id" })
     variant: ProductVariant;
 
