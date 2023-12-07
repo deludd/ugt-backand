@@ -40,7 +40,31 @@ const plugins = [
     resolve: `@medusajs/file-local`,
     options: {
       upload_dir: "uploads",
-      mimeTypes: ['application/zip']
+      mimeTypes: [
+        // Типы для архивов
+        'application/zip',
+        'application/x-rar-compressed',
+        'application/x-7z-compressed',
+        'application/x-tar',
+        'application/gzip',
+        'application/x-bzip',
+        'application/x-bzip2',
+        'application/x-lzh-compressed',
+        'application/x-lzma',
+        'application/x-zip-compressed',
+        'application/x-stuffit',
+        'application/x-stuffitx',
+        'application/x-gtar',
+
+        // Типы для изображений
+        'image/jpeg',
+        'image/png',
+        'image/gif',
+        'image/bmp',
+        'image/tiff',
+        'image/svg+xml',
+        'image/webp'
+      ]
     },
   },
   {
