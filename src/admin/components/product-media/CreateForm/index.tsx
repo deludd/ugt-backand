@@ -30,6 +30,7 @@ const ProductMediaCreateForm = ({
     const [name, setName] = useState("")
     const [type, setType] = useState("main")
     const [file, setFile] = useState<File>()
+    const [price, setPrice] = useState("");
 
     const createProduct = useAdminCreateProduct()
     const uploadFile = useAdminUploadProtectedFile()
@@ -45,7 +46,6 @@ const ProductMediaCreateForm = ({
     )
 
     const isLoading = status === 'pending';
-
 
     const navigate = useNavigate()
 
@@ -142,6 +142,15 @@ const ProductMediaCreateForm = ({
                     />
                 </div>
                 <div className="flex gap-4 items-center">
+                    <Label>Price</Label>
+                    <Input
+                        type="number"
+                        placeholder="Price"
+                        value={price}
+                        onChange={(e) => setPrice(e.target.value)}
+                    />
+                </div>
+                <div className="flex gap-4 items-center">
                     <Label>Type</Label>
                     <Select onValueChange={setType} value={type}>
                         <Select.Trigger>
@@ -168,8 +177,8 @@ const ProductMediaCreateForm = ({
                     variant="primary"
                     type="submit"
                     isLoading={
-                        createProduct.isLoading ||
-                        uploadFile.isLoading ||
+                        createProduct.isPending ||
+                        uploadFile.isPending ||
                         isLoading
                     }>
                     Create

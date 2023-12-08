@@ -20,19 +20,19 @@ export default async function handleOrderPlaced({
         relations: [
             "items",
             "items.variant",
-            "items.variant.product_medias",
+            "items.variant.product_media",
         ],
     })
 
     // find product medias in the order
     const urls = []
     for (const item of order.items) {
-        if (!item.variant.product_medias.length) {
+        if (!item.variant.product_media.length) {
             return
         }
 
         await Promise.all([
-            item.variant.product_medias.forEach(
+            item.variant.product_media.forEach(
                 async (productMedia) => {
                     // get the download URL from the file service
                     const downloadUrl = await

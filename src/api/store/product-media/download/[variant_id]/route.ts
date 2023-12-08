@@ -23,7 +23,7 @@ export const GET = async (
     const orders = await ordersService.list({
         customer_id: req.user.customer_id,
     }, {
-        relations: ["items", "items.variant"],
+        relations: ["items", "items.variant", "items.variant.product_medias"],
     })
 
     let variant: ProductVariant
